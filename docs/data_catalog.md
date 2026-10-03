@@ -66,9 +66,9 @@ The Gold Layer is the business-level data representation, structured to support 
 | `order_date` | DATE | Date when the sales order was placed. |
 | `shipping_date` | DATE | Date when the sales order was shipped. |
 | `due_date` | DATE | Expected delivery or due date of the sales order. |
-| `sales_amount` | DECIMAL | Total sales amount associated with the sales transaction. |
+| `sales_amount` | INT | Total sales amount associated with the sales transaction. |
 | `quantity` | INT | Number of units sold in the transaction. |
-| `price` | DECIMAL | Selling price per unit. |
+| `price` | INT | Selling price per unit. |
 
 ---
 
