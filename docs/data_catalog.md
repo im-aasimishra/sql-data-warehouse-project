@@ -74,54 +74,57 @@ The Gold Layer is the business-level data representation, structured to support 
 
 ## Data Model
 
-The Gold Layer follows a **Star Schema** where the `fact_sales` table connects to the `dim_customers` and `dim_prodcuts` dimension tables.
+The Gold Layer follows a **Star Schema** consisting of two dimension tables and one central fact table.
 
-```text
-                 ┌─────────────────────────┐
-                 │   gold.dim_customers    │
-                 ├─────────────────────────┤
-                 │ PK customer_key         │
-                 │    customer_id          │
-                 │    customer_number      │
-                 │    first_name           │
-                 │    last_name            │
-                 │    country              │
-                 │    marital_status       │
-                 │    gender               │
-                 │    birthdate            │
-                 │    create_date          │
-                 └────────────┬────────────┘
-                              │
-                              │ customer_key
-                              ▼
-                 ┌─────────────────────────┐
-                 │     gold.fact_sales     │
-                 ├─────────────────────────┤
-                 │    order_number         │
-                 │ FK product_key          │
-                 │ FK customer_key         │
-                 │    order_date           │
-                 │    shipping_date        │
-                 │    due_date             │
-                 │    sales_amount         │
-                 │    quantity             │
-                 │    price                │
-                 └────────────┬────────────┘
-                              │
-                              │ product_key
-                              ▼
-                 ┌─────────────────────────┐
-                 │   gold.dim_prodcuts     │
-                 ├─────────────────────────┤
-                 │ PK product_key          │
-                 │    product_id           │
-                 │    product_number       │
-                 │    product_name         │
-                 │    category_id          │
-                 │    category             │
-                 │    subcategory          │
-                 │    maintenance          │
-                 │    cost                 │
-                 │    product_line         │
-                 │    start_date           │
-                 └─────────────────────────┘
+```mermaid
+erDiagram
+
+    gold_dim_customers ||--o{ gold_fact_sales : "customer_key"
+    gold_dim_prodcuts ||--o{ gold_fact_sales : "product_key"
+
+    gold_dim_customers {
+        INT customer_key PK
+        INT customer_id
+        NVARCHAR customer_number
+        NVARCHAR first_name
+        NVARCHAR last_name
+        NVARCHAR country
+        NVARCHAR marital_status
+        NVARCHAR gender
+        DATE birthdate
+        DATE create_date
+    }
+
+    gold_fact_sales {
+        NVARCHAR order_number
+        INT product_key FK
+        INT customer_key FK
+        DATE order_date
+        DATE shipping_date
+        DATE due_date
+        DECIMAL sales_amount
+        INT quantity
+        DECIMAL price
+    }
+
+    gold_dim_prodcuts {
+        INT product_key PK
+        INT product_id
+        NVARCHAR product_number
+        NVARCHAR product_name
+        NVARCHAR category_id
+        NVARCHAR category
+        NVARCHAR subcategory
+        NVARCHAR maintenance
+        INT cost
+        NVARCHAR product_line
+        DATE start_date
+    }
+```
+
+### Relationships
+
+- `gold.dim_customers.customer_key` → `gold.fact_sales.customer_key`
+- `gold.dim_prodcuts.product_key` → `gold.fact_sales.product_key`
+- `dim_customers` and `dim_prodcuts` are **dimension tables**.
+- `fact_sales` is the **central fact table** containing sales transactions and measurable business metrics.
