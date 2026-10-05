@@ -78,6 +78,6 @@ See the [`LICENSE`](LICENSE) file for details.
 
 ## 👤 About
 
-I'm building my skills in **Data Analytics, SQL, Data Warehousing, and Business Intelligence** through hands-on projects.
+I am Aasi Mishra , BCA student. I'm building my skills in **Data Analytics, SQL, Data Warehousing, and Business Intelligence** through hands-on projects.
 
 This is one of my first end-to-end analytics projects and will continue to evolve as I develop my skills.
